@@ -16,7 +16,7 @@ Flask é um microframework web de código aberto para a linguagem de programaç�
 1. [Instalação do Flask](./InstalacaoFlask.md)
 2. [Criando Sua Primeira Aplicação Flask](./AplicacaoFlask.md)
 3. [Executando a Aplicação Flask](./ExecutandoFlask.md)
-4. [Criando Rotas Adicionais](./Rotas.md)
+4. [Criando Rotas Adicionais](./CriandoRotas.md)
 5. [Usando Variáveis nas Rotas](./VariaveisRotas.md)
 6. [Renderizando Templates (HTML)](./RenderizandoTemplates.md)
 7. [Manipulando Requisições](./ManipulandoRequisicoes.md)
