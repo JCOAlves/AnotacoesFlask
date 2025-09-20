@@ -1,5 +1,6 @@
 # Guia Flask
-Flask é um microframework web de código aberto para a linguagem de programação Python, que permite criar aplicações web e APIs de forma rápida, eficiente e flexível. Como um microframework, ele se destaca pela sua simplicidade e leveza, oferecendo um núcleo enxuto que pode ser expandido com bibliotecas e extensões de terceiros para adicionar funcionalidades complexas, como integração com bancos de dados. 
+Este repositorio é um guia desenvolvido por [JCOAlves](https://github.com/JCOAlves) para aqueles que desejam começar um projeto Flask.
+O Flask é um microframework web de código aberto para a linguagem de programação Python, que permite criar aplicações web e APIs de forma rápida, eficiente e flexível. Como um microframework, ele se destaca pela sua simplicidade e leveza, oferecendo um núcleo enxuto que pode ser expandido com bibliotecas e extensões de terceiros para adicionar funcionalidades complexas, como integração com bancos de dados. 
 
 ## Principais características
 - **Leve e minimalista:** O Flask oferece apenas o essencial para começar, o que o torna ideal para quem busca simplicidade e controle sobre o projeto. 
@@ -24,4 +25,4 @@ Flask é um microframework web de código aberto para a linguagem de programaç�
 9. [Lidando com a sessão](./Sessao.md)
 10. [Implementado banco de dados SQL](./BancoDados.md)
 
-Este repositorio é um guia para aqueles que desejam começar um projeto Flask. Para ir além, você pode explorar a [**Documentação Oficial do Flask**](https://flask.palletsprojects.com/)
+Para ir além, você explore a [**Documentação Oficial do Flask**](https://flask.palletsprojects.com/)
