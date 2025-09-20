@@ -2,7 +2,7 @@
 
 Para criar aplicações web mais complexas, você precisará renderizar arquivos HTML. O Flask usa o Jinja2 como seu motor de templates.
 
-# 1. Criando a Pasta `templates`
+## 1. Criando a Pasta `templates`
 
 O Flask espera que seus arquivos HTML estejam em uma pasta chamada `templates` dentro do diretório do seu projeto.
 
