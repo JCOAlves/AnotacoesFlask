@@ -1,7 +1,7 @@
-# **1. Instalação do Flask**
+# Instalação do Flask
 Antes de instalar o Flask, é altamente recomendável criar um ambiente virtual. Isso isola as dependências do seu projeto, evitando conflitos com outros projetos Python no seu sistema.
 
-## **1. Criando um Ambiente Virtual**
+## 1. Criando um Ambiente Virtual
 1. **Abra o terminal ou prompt de comando.**
 2. **Navegue até o diretório onde você quer criar seu projeto.**
     
@@ -32,7 +32,7 @@ Após criar o ambiente virtual, você precisa ativá-lo:
 
 Você saberá que o ambiente virtual está ativo quando o nome do ambiente (por exemplo, `(.venv)`) aparecer no início da linha de comando.
 
-## **3. Instalando o Flask**
+## 3. Instalando o Flask
 Com o ambiente virtual ativado, você pode instalar o Flask usando `pip`:
 
 ```bash
