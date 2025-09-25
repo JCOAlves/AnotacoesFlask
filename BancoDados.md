@@ -108,7 +108,7 @@ Esses são os tipos de dados básicos que você usa para definir o tipo de infor
 - ```db.DateTime```: Um valor de data e hora. Você pode usar default=db.func.now() para preencher automaticamente com a data e hora atuais.
 - ```db.Date```: Um valor de data.
 - ```db.Time```: Um valor de hora.
-
+  
 **Restrições (Constraints)**
 
 Esses atributos de palavra-chave são usados dentro de db.Column() para adicionar restrições à coluna.
@@ -117,6 +117,7 @@ Esses atributos de palavra-chave são usados dentro de db.Column() para adiciona
 - ```unique=True```: Garante que todos os valores na coluna sejam únicos. Isso impede a inserção de valores duplicados.
 - ```default='valor'```: Define um valor padrão para a coluna. Se um valor não for fornecido na criação de um novo registro, este valor será usado.
 - ```index=True```: Cria um índice na coluna, o que pode acelerar as operações de busca e consulta.
+- ```db.func.now()```: Função que adiciona data e hora atuais no momento do registro
 
 **Relacionamentos (Relationships)**
 
