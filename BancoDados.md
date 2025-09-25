@@ -116,7 +116,7 @@ Esses atributos de palavra-chave são usados dentro de db.Column() para adiciona
 - ```nullable=False```: Torna a coluna obrigatória. Um valor não pode ser ```NULL```.
 - ```unique=True```: Garante que todos os valores na coluna sejam únicos. Isso impede a inserção de valores duplicados.
 - ```default='valor'```: Define um valor padrão para a coluna. Se um valor não for fornecido na criação de um novo registro, este valor será usado.
-- ```Enum('dado1','dado2')```: Restrige a coluna para um grupo de valores especifico.
+- ```Enum('dado1','dado2')```: Restrige a coluna para um grupo de valores especifico. Para ser usada precissa ser importada diretamente do SQLAlchemy.
 - ```name='status_tarefa'```: É opcional, mas é uma boa prática para dar um nome explícito ao tipo ```ENUM``` no banco de dados.
 - ```index=True```: Cria um índice na coluna, o que pode acelerar as operações de busca e consulta.
 - ```db.func.now()```: Função que adiciona data e hora atuais no momento do registro
