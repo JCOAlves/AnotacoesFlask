@@ -96,17 +96,34 @@ class Aviso(db.Model):
         return f"Aviso('{self.titulo}', '{self.data_criacao}')"
 ```
 
-Explicação dos Atributos`db.Column`
+**Tipos de Dados (Types)**
 
-- `db.Integer`: Tipo de dado para números inteiros.
-- `db.String(tamanho)`: Tipo de dado para textos curtos de tamanho fixo.
-- `db.Text`: Tipo de dado para textos longos, sem limite de tamanho.
-- `db.DateTime`: Tipo de dado para datas e horas.
-- `primary_key=True`: Define a coluna como a chave primária da tabela.
-- `nullable=False`: Impede que a coluna tenha um valor nulo, ou seja, ela é obrigatória.
-- `unique=True`: Garante que não haverá valores duplicados nesta coluna.
-- `default=db.func.now()`: Define um valor padrão, que neste caso é a data e hora atuais.
-- `db.ForeignKey('tabela.coluna')`: Cria uma chave estrangeira que vincula esta tabela a outra.
+Esses são os tipos de dados básicos que você usa para definir o tipo de informação que a coluna irá armazenar.
+
+- ```db.Integer```: Um número inteiro.
+- ```db.String(tamanho)```: Um texto de tamanho limitado. tamanho é obrigatório.
+- ```db.Text```: Um texto longo, sem limite de tamanho.
+- ```db.Boolean```: Um valor booleano (True ou False).
+- ```db.Float```: Um número de ponto flutuante (decimal).
+- ```db.DateTime```: Um valor de data e hora. Você pode usar default=db.func.now() para preencher automaticamente com a data e hora atuais.
+- ```db.Date```: Um valor de data.
+- ```db.Time```: Um valor de hora.
+
+**Restrições (Constraints)**
+
+Esses atributos de palavra-chave são usados dentro de db.Column() para adicionar restrições à coluna.
+- ```primary_key=True```: Define a coluna como a chave primária da tabela. É usada para identificar de forma única cada linha.
+- ```nullable=False```: Torna a coluna obrigatória. Um valor não pode ser NULL.
+- ```unique=True```: Garante que todos os valores na coluna sejam únicos. Isso impede a inserção de valores duplicados.
+- ```default='valor'```: Define um valor padrão para a coluna. Se um valor não for fornecido na criação de um novo registro, este valor será usado.
+- ```index=True```: Cria um índice na coluna, o que pode acelerar as operações de busca e consulta.
+
+**Relacionamentos (Relationships)**
+
+Esses atributos são usados para criar relacionamentos entre as tabelas do banco de dados, como chaves estrangeiras.
+
+- ```db.ForeignKey('nome_da_tabela.nome_da_coluna')```: Define uma chave estrangeira. Ela vincula uma coluna a uma coluna de outra tabela. O nome da tabela deve ser todo em letras minúsculas.
+- ```db.relationship()```: É usado na classe do modelo para definir a relação entre as tabelas. Ele não cria uma coluna no banco de dados, mas sim um atributo na classe Python que facilita o acesso aos dados relacionados. Por exemplo, em um modelo Usuario, você poderia definir um relacionamento para acessar todos os avisos criados por aquele usuário.
 
 ## 4. Criando tabelas no banco
 
