@@ -146,12 +146,11 @@ Depois de definir seus modelos, você precisa dizer ao Flask-SQLAlchemy para cri
 2. Abra o terminal na pasta do seu projeto. Certifique-se de que seu ambiente virtual está ativado.
 3. Execute o comando `flask shell`.
 4. Dentro do shell interativo, execute os seguintes comandos:
-
-```python
->>> from app import app, db
->>> with app.app_context():
-...     db.create_all()
-```
+    ```python
+    >>> from app import app, db
+    >>> with app.app_context():
+    ...     db.create_all()
+    ```
 
 O comando `db.create_all()` irá inspecionar todos os modelos que herdam de `db.Model` e criará as tabelas correspondentes no seu banco de dados MySQL. Se as tabelas já existirem, este comando não fará nada.
 
@@ -187,8 +186,8 @@ Com a conexão estabelecida, você pode realizar as operações de CRUD nas suas
     ```
     
 - **DELETE (Excluir)**: Encontre o registro, use `db.session.delete()` e confirme.
-```python
-usuario = Usuario.query.get(1)
-db.session.delete(usuario)
-db.session.commit()
-```
+    ```python
+    usuario = Usuario.query.get(1)
+    db.session.delete(usuario)
+    db.session.commit()
+    ```
