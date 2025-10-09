@@ -166,16 +166,49 @@ Com a conexão estabelecida, você pode realizar as operações de CRUD nas suas
     db.session.commit()
     ```
     
-- **READ (Ler)**: Use o método `.query` para buscar registros. Você pode pegar todos (`.all()`) ou um único registro por ID (`.get_or_404()`).
-    
-    ```python
-    # Lê todos os usuários
-    usuarios = Usuario.query.all()
-    # Lê um único usuário por ID
-    usuario = Usuario.query.get_or_404(1)
-    # Para buscas por colunas específicas
-    usuarios_por_nome = Usuario.query.filter_by(nome='Maria').all()
-    ```
+- **READ (Ler)**: Use o método `.query` para buscar registros.
+    ### 5.1 Busca por Chave Primária (Primary Key)
+  Essas funções são ideais quando você sabe o ID exato que está procurando. Elas buscam apenas um único objeto e são extremamente otimizadas.
+    - ```.get(pk)```: A maneira mais simples de buscar um objeto pela sua chave primária (PK). Retorna o Objeto (instância da classe) ou	None (o mais seguro para verificar).
+    - ```.get_or_404(pk)```: Semelhante a ```.get()```, mas é uma conveniência do Flask-SQLAlchemy (ou Flask) para lidar com rotas. Retorna o objeto ou levanta um erro HTTP 404 (Not Found), interrompendo a execução.
+      
+        ```python
+        # Busca um único informativo pelo ID 5. Se não existir, retorna None.
+        info = Informativos.query.get(5)
+        ```
+    ### 5.2 Consulta e Filtragem (Querying and Filtering)
+  Essas são as funções mais comuns para buscar dados com base em condições, não apenas pela chave primária.
+    - ```.filter_by(kwargs)```: Aplica filtros baseados em palavras-chave (atributos da classe). É o método mais simples.
+    - ```.filter(*args)```: Aplica filtros usando expressões SQL mais complexas, como comparações (>, !=), like, and_, or_.
+    - ```.all()```: Executa a consulta e retorna todos os resultados correspondentes como uma lista de objetos.
+    - ```.first()``` Executa a consulta e retorna o primeiro objeto encontrado. Útil quando você espera, no máximo, um resultado.
+    - ```.one()```: Executa a consulta e espera exatamente um resultado.
+    - ```.one_or_none()```: Executa a consulta e espera um ou nenhum resultado.
+  
+        ```python
+        # Busca todos os informativos com 'assunto' igual a "Avaliação"
+        avaliacoes = Informativos.query.filter_by(assunto="Avaliação").all()
+
+        # Busca o primeiro material didático para o ID_informativo 10
+        material = Dados_materiais.query.filter_by(informativo=10).first()
+
+        # Usando .filter() para expressões mais complexas (ex: data maior que)
+        # (Você precisaria importar 'db.func' ou 'and_', 'or_' do sqlalchemy)
+        eventos_futuros = Dados_eventos.query.filter(Dados_eventos.data_InicioEvento > data_hoje).all()
+        ```
+    ### 5.3 Contagem, Ordem e Limitação
+  Usadas para refinar o dataset ou obter estatísticas sobre os dados.
+    - ```.count()```:	Retorna o número de resultados que a consulta produziria. (Obsoleto, prefira ```db.session.query(Model).count()```). Retorna um número inteiro.
+    - ```.order_by(*args)```:	Ordena os resultados com base em uma coluna. Use ```.desc()``` para ordem decrescente.
+    - ```.limit(N)```: Limita o número máximo de resultados retornados.
+  
+        ```python
+        # 1. Busca todos os eventos, ordenados pela data inicial de forma decrescente
+        eventos_ordenados = Dados_eventos.query.order_by(Dados_eventos.data_InicioEvento.desc()).all()
+
+        # 2. Conta quantos informativos existem
+        total_infos = Informativos.query.count()
+        ```
     
 - **UPDATE (Atualizar)**: Encontre o registro que deseja modificar, altere os atributos do objeto e confirme as mudanças.
     
@@ -187,6 +220,7 @@ Com a conexão estabelecida, você pode realizar as operações de CRUD nas suas
     
 - **DELETE (Excluir)**: Encontre o registro, use `db.session.delete()` e confirme.
     ```python
+    #Busca o objeto a ser deletado.
     usuario = Usuario.query.get(1)
     db.session.delete(usuario)
     db.session.commit()
