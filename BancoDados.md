@@ -165,6 +165,29 @@ Com a conexão estabelecida, você pode realizar as operações de CRUD nas suas
     db.session.add(novo_usuario)
     db.session.commit()
     ```
+    No caso de os dados a serem registrados no banco seja do tipo date, é necessario converter strings de data/hora para objetos Python
+
+    ```python
+    from datetime import datetime
+
+    # 1. Sua string de data e hora
+    data_hora_string = "2023-12-09 19:30:34"
+
+    # 2. O formato que corresponde à sua string
+    # %Y: Ano com 4 dígitos (2023)
+    # %m: Mês com 2 dígitos (12)
+    # %d: Dia com 2 dígitos (09)
+    # %H: Hora (24h) (19)
+    # %M: Minuto (30)
+    # %S: Segundo (34)
+    formato_da_string = "%Y-%m-%d %H:%M:%S"
+
+    # 3. Conversão
+    data_hora_objeto = datetime.strptime(data_hora_string, formato_da_string)
+
+    # Resultado: data_hora_objeto é um objeto datetime.datetime(2023, 12, 9, 19, 30, 34)
+    print(data_hora_objeto)
+    ```
     
 - **READ (Ler)**: Use o método `.query` para buscar registros.
     ### 5.1 Busca por Chave Primária (Primary Key)
