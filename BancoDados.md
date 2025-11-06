@@ -240,6 +240,15 @@ Com a conexão estabelecida, você pode realizar as operações de CRUD nas suas
     usuario.nome = "Pedro"
     db.session.commit()
     ```
+    No caso em que o registro que se deseje modificar seja date, é necessario converte-lo para objeto Python, como visto anteriomente.
+    ```python
+    # O NOVO VALOR que você deseja aplicar 
+    nova_data_string = "2026-05-15 14:00:00" 
+    formato = "%Y-%m-%d %H:%M:%S" # Adapte o formato se necessário
+
+    # CONVERSÃO: O SQLAlchemy só aceita o objeto nativo do Python
+    nova_data_objeto = datetime.strptime(nova_data_string, formato)
+    ```
     
 - **DELETE (Excluir)**: Encontre o registro, use `db.session.delete()` e confirme.
     ```python
