@@ -1,4 +1,4 @@
-# **Manipulando Requisições**
+# Manipulando Requisições
 O Flask, por padrão, utiliza o método `GET` para as requisições. Para manipular outros métodos como `POST`, `PUT` ou `DELETE`, você precisa configurá-los explicitamente nas suas rotas.
 A chave para isso é o parâmetro `methods` no decorador `@app.route()`.
 
@@ -17,7 +17,6 @@ Cada método HTTP tem um propósito semântico específico. Usar o método corre
 
 
 ## 2. Como Manipular as Requisições no Flask
-
 A manipulação de diferentes métodos de requisição é feita no seu script principal do Flask (`app.py`).
 
 ### 1. Rota Única para Múltiplos Métodos

@@ -1,9 +1,7 @@
 # Lidando com Arquivos Estáticos
-
 Por padrão, o Flask procura seus arquivos estáticos (CSS, JS, imagens, etc.) em uma pasta chamada **`static`** dentro do diretório raiz da sua aplicação.
 
 **Estrutura de Diretórios Recomendada:**
-
 Para que o Flask encontre seus arquivos estáticos, organize-os assim:
 
 ```python
@@ -23,15 +21,11 @@ seu_projeto/
 
 Dentro da pasta `static`, você pode criar subpastas para organizar melhor seus arquivos (ex: `css`, `js`, `img`).
 
----
-
 ## 1. Crie os Arquivos Estáticos
-
 Dentro da pasta `static`:
 
-- **`static/css/style.css**:CSS`
-    
-    ```python
+- **`static/css/style.css`**:
+    ```css
     body {
         font-family: Arial, sans-serif;
         background-color: #f4f4f4;
@@ -48,15 +42,13 @@ Dentro da pasta `static`:
     }
     ```
     
-- **`static/js/script.js**:JavaScript`
-    
-    ```python
+- **`static/js/script.js`**:
+    ```JavaScript
     document.addEventListener('DOMContentLoaded', function() {
         console.log('O JavaScript está funcionando!');
         alert('Bem-vindo à sua aplicação Flask!');
     });
     ```
-    
 
 ## 2. Modifique Seu Template HTML (`templates/index.html`)
 Agora, você precisa referenciar esses arquivos no seu HTML. Para isso, o Flask oferece a função `url_for()`, que é essencial para gerar URLs para arquivos estáticos.
@@ -90,7 +82,6 @@ Agora, você precisa referenciar esses arquivos no seu HTML. Para isso, o Flask 
     
 
 ## 3. Modifique Seu Arquivo da Aplicação (`app.py`)
-
 Certifique-se de que sua rota principal esteja renderizando o `index.html`.
 
 **`app.py`**:
@@ -108,20 +99,15 @@ if __name__ == '__main__':
     app.run(debug=True)
 ```
 
----
-
 ## 4. Execute Sua Aplicação
-
-1. **Abra seu terminal** no diretório raiz do seu projeto (`seu_projeto/`).
-2. **Ative seu ambiente virtual**:
+1. Abra seu terminal no diretório raiz do seu projeto (`seu_projeto/`).
+2. Ative seu ambiente virtual:
     - `.\.venv\Scripts\activate` (PowerShell)
     - `venv\Scripts\activate` (CMD)
-3. **Execute sua aplicação Flask**:
-    
+3. Execute sua aplicação Flask:
     ```python
     python app.py
     ```
-    
-4. **Acesse no navegador**: Abra `http://127.0.0.1:5000`.
+4. Acesse no navegador: Abra `http://127.0.0.1:5000`.
 
 Você deverá ver a página com o estilo CSS aplicado (fundo cinza claro, texto escuro, título azul) e um alerta JavaScript aparecerá quando a página carregar, confirmando que ambos os arquivos estáticos foram carregados e executados corretamente.
