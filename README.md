@@ -14,12 +14,12 @@ O Flask é um microframework web de código aberto para a linguagem de programa�
 - **Projetos personalizados:** Ideal para projetos que requerem uma solução personalizada e a liberdade de escolher as ferramentas e bibliotecas que melhor se adequam às necessidades.
 
 ## Sumario
-1. [Criando um projeto Flask]("./ProjetoFlask.md")
-2. [Rotas na aplicação Flask]("./CriandoRotas.md")
-3. [Renderizando Templates (HTML)]("./RenderizandoTemplates.md")
-4. [Lidando com Arquivos Estáticos]("./ArquivosEstaticos.md")
-5. [Lidando com a sessão (`session`)]("./Sessao.md")
-6. [Implementado banco de dados SQL]("./ConexaoBD.md")
-7. [Manipulando banco de dados com o Flask]("./ManipulacaoBD.md")
+1. [Criando um projeto Flask]("ProjetoFlask.md")
+2. [Rotas na aplicação Flask]("CriandoRotas.md")
+3. [Renderizando Templates (HTML)]("RenderizandoTemplates.md")
+4. [Lidando com Arquivos Estáticos]("ArquivosEstaticos.md")
+5. [Lidando com a sessão (`session`)]("Sessao.md")
+6. [Implementado banco de dados SQL]("ConexaoBD.md")
+7. [Manipulando banco de dados com o Flask]("ManipulacaoBD.md")
 
 Para ir além, você explore a [**Documentação Oficial do Flask**](https://flask.palletsprojects.com/)
