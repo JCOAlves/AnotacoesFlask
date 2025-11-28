@@ -69,7 +69,7 @@ Agora, abra seu navegador web e acesse `http://127.0.0.1:5000`. Você deverá ve
 Agora que o Flask está instalado, vamos criar uma aplicação "Olá, Mundo!".
 
 1. Crie um arquivo Python dentro do diretório do seu projeto (e fora do diretório `venv`). Vamos chamá-lo de `app.py`.
-2. Adicione o seguinte código ao `app.py`:Python
+2. Adicione o seguinte código ao `app.py`:
     
     ```python
     from flask import Flask
