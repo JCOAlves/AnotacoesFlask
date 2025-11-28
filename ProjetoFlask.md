@@ -26,7 +26,7 @@ Após criar o ambiente virtual, você precisa ativá-lo:
     
 - **No macOS/Linux:**
     ```bash
-    source venv/bin/activate
+    source .venv/bin/activate
     ```
     
 
