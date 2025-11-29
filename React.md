@@ -6,6 +6,7 @@ A chave para essa integração é garantir que o React possa fazer requisições
 ## 1. ⚙️ Estrutura e Configuração do Projeto
 A maneira mais organizada é manter o frontend e o backend em pastas separadas:
 
+```cmd
 /projeto_completo
 ├── /backend/               # Servidor Flask (API)
 │   ├── app.py
@@ -15,14 +16,15 @@ A maneira mais organizada é manter o frontend e o backend em pastas separadas:
     ├── package.json
     ├── /src
     └── ...
+```
+
 ## 2. 🐍 Configuração do Flask (Backend - API)
 O Flask será responsável por hospedar e servir a API para o banco de dados.
 
 A. Criar Endpoints da API
 Defina rotas no Flask que retornem dados em formato JSON, utilizando jsonify.
 
-Python
-
+```Python
 # backend/app.py
 from flask import Flask, jsonify
 from flask_cors import CORS # Necessário para desenvolvimento
@@ -47,20 +49,81 @@ def get_user_data():
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000) # Flask rodando na porta 5000
+```
+
 B. Opcional: Flask-CORS
 Durante a fase de desenvolvimento, o React geralmente roda na porta 3000 (ou similar) e o Flask na porta 5000. Isso é considerado uma requisição de domínio cruzado (Cross-Origin Request). Para evitar erros de segurança no navegador, você precisa instalar e usar o Flask-CORS:
 
-Bash
-
+```Bash
 pip install flask-cors
+```
+Existem duas formas principais de configurar o CORS no seu aplicativo Flask:
+
+A. Para Todas as Rotas (Recomendado na Fase de Desenvolvimento)
+Esta é a maneira mais simples, onde o CORS é habilitado para todas as rotas da sua aplicação, aceitando requisições de qualquer origem (origins='*'). É ideal para o desenvolvimento local.
+
+Python
+
+# backend/app.py
+from flask import Flask
+from flask_cors import CORS # 1. Importar CORS
+
+app = Flask(__name__)
+
+# 2. Inicializar CORS, permitindo requisições de qualquer origem ('*')
+CORS(app) 
+
+# Rotas da API
+@app.route('/api/status')
+def get_status():
+    # ...
+B. Para Origens Específicas (Recomendado para Produção)
+Para maior segurança, você deve restringir as requisições apenas aos domínios (origens) confiáveis. Durante o desenvolvimento, você pode listar a porta do seu React.
+
+Python
+
+# backend/app.py
+from flask import Flask
+from flask_cors import CORS
+
+app = Flask(__name__)
+
+# Configuração que permite apenas requisições da porta 3000 (React local)
+CORS(app, origins='http://localhost:3000') 
+
+# Se você tivesse mais de um domínio permitido:
+# CORS(app, origins=['http://localhost:3000', 'https://seusite.com.br']) 
+
+# ... Rotas da API
+C. Para Rotas Individuais
+Se você precisar de controle granular, pode usar o decorador cross_origin() em rotas específicas:
+
+Python
+
+from flask import Flask, jsonify
+from flask_cors import cross_origin
+
+app = Flask(__name__)
+
+# Esta rota só permite acesso da porta 3000
+@app.route('/api/dados_protegidos')
+@cross_origin(origins='http://localhost:3000') 
+def dados_protegidos():
+    return jsonify({"dados": "confidenciais"})
+
+# Esta rota permite acesso de qualquer origem
+@app.route('/api/dados_publicos')
+@cross_origin() 
+def dados_publicos():
+    return jsonify({"dados": "publicos"})
+O método A (CORS(app)) é o mais prático para começar, mas lembre-se de restringir as origens na etapa de produção usando o método B.
 3. ⚛️ Configuração do React (Frontend - Interface)
 O React será responsável por renderizar a interface e fazer as requisições HTTP.
 
 A. Fazer Requisições (Fetch API ou Axios)
 O componente React usará a função useEffect para chamar a API Flask assim que o componente for montado.
 
-JavaScript
-
+```JavaScript
 // frontend/src/components/UserList.js (Exemplo de componente React)
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // Usando a biblioteca Axios, muito comum
@@ -91,22 +154,24 @@ function UserList() {
   );
 }
 export default UserList;
+```
+
 4. 🚢 Etapa de Produção (Deployment)
 Para a produção (quando você for hospedar o site final), você não pode rodar o React e o Flask em portas separadas. Você usará o Flask para servir os arquivos estáticos do React.
 
 Compilar o React: No terminal da pasta /frontend, execute o comando de build do React:
 
-Bash
-
+```Bash
 npm run build
+```
+
 Isso criará uma pasta build/ (ou dist/) contendo todos os arquivos HTML, CSS e JavaScript estáticos e otimizados do seu frontend.
 
 Configurar o Flask para Servir o Build: Mova a pasta build/ do React para dentro da pasta backend/static/ (ou renomeie o parâmetro static_folder do Flask).
 
 Em seguida, configure o Flask para capturar todas as rotas não-API e enviar o arquivo index.html do React:
 
-Python
-
+```Python
 # backend/app.py (Configuração de produção)
 import os
 from flask import send_from_directory, Flask
@@ -130,4 +195,5 @@ def serve(path):
 
 # Rodar o Flask na porta 5000 (servirá tanto a API quanto o frontend)
 # ...
+```
 Dessa forma, o Flask atua como o servidor unificado que entrega o código da interface (React) e processa as solicitações da API.
