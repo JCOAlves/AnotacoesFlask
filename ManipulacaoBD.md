@@ -147,9 +147,9 @@ db.session.commit()
 Use o método `.query` para buscar registros.
 
 #### Busca por Chave Primária (Primary Key)
-  Essas funções são ideais quando você sabe o ID exato que está procurando. Elas buscam apenas um único objeto e são extremamente otimizadas.
-    - ```.get(pk)```: A maneira mais simples de buscar um objeto pela sua chave primária (PK). Retorna o Objeto (instância da classe) ou	None (o mais seguro para verificar).
-    - ```.get_or_404(pk)```: Semelhante a ```.get()```, mas é uma conveniência do Flask-SQLAlchemy (ou Flask) para lidar com rotas. Retorna o objeto ou levanta um erro HTTP 404 (Not Found), interrompendo a execução.
+Essas funções são ideais quando você sabe o ID exato que está procurando. Elas buscam apenas um único objeto e são extremamente otimizadas.
+- ```.get(pk)```: A maneira mais simples de buscar um objeto pela sua chave primária (PK). Retorna o Objeto (instância da classe) ou	None (o mais seguro para verificar).
+- ```.get_or_404(pk)```: Semelhante a ```.get()```, mas é uma conveniência do Flask-SQLAlchemy (ou Flask) para lidar com rotas. Retorna o objeto ou levanta um erro HTTP 404 (Not Found), interrompendo a execução.
       
         ```python
         # Busca um único informativo pelo ID 5. Se não existir, retorna None.
