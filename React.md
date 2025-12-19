@@ -155,76 +155,76 @@ Dessa forma, devemos configurar asn credenciais do React e do Flask para o envio
   Você deve dizer à função fetch para incluir os cookies na requisição, definindo a opção credentials como 'include'. 
   ```javascript
   //Metodo GET
-export async function GET(rota){ 
-    try { 
-        let resposta = await fetch(rota, {credentials: 'include'}); // Permite que o navegador pegue cookies de sessão
-        const dados = await resposta.json();
-        if("mensagemServidor" in dados){
-            return dados["mensagemServidor"];
-        }else{
-            return dados;
+    export async function GET(rota){ 
+        try { 
+            let resposta = await fetch(rota, {credentials: 'include'}); // Permite que o navegador pegue cookies de sessão
+            const dados = await resposta.json();
+            if("mensagemServidor" in dados){
+                return dados["mensagemServidor"];
+            }else{
+                return dados;
+            }
+
+        } catch (erro) {
+            console.error("Erro na busca de dados", erro)
+            return {"mensagemServidor": `Erro na busca de dados: ${erro.message || erro}`};
         }
+    };
 
-    } catch (erro) {
-        console.error("Erro na busca de dados", erro)
-        return {"mensagemServidor": `Erro na busca de dados: ${erro.message || erro}`};
-    }
-};
+    //Metodo POST
+    export async function POST(rota, objeto) {
+        try {
+            const objetoJSON = JSON.stringify(objeto);
+            let resposta = await fetch(rota, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: objetoJSON,
+                credentials: 'include' // Permite que o navegador envie cookies da sessão
+            })
+            resposta = await resposta.json();
+            return resposta
+        }
+        catch {
+            console.error("Erro no envio de dados", erro)
+            return {"mensagemServidor": `Erro no envio de dados: ${erro.message || erro}`}
+        }
+    };
 
-//Metodo POST
-export async function POST(rota, objeto) {
-    try {
-        const objetoJSON = JSON.stringify(objeto);
-        let resposta = await fetch(rota, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: objetoJSON,
-            credentials: 'include' // Permite que o navegador envie cookies de sessão
-        })
-        resposta = await resposta.json();
-        return resposta
-    }
-    catch {
-        console.error("Erro no envio de dados", erro)
-        return {"mensagemServidor": `Erro no envio de dados: ${erro.message || erro}`}
-    }
-};
+    //Metodo PUT
+    export async function PUT(rotaEspecifica, objeto) {
+        try{
+            const objetoJSON = JSON.stringify(objeto);
+            let resposta = await fetch(rotaEspecifica, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: objetoJSON,
+                credentials: 'include' // Permite que o navegador envie cookies da sessão
+            })
+            resposta = await resposta.json();
+            return resposta
+        }
+        catch{
+            console.error("Erro na atualização de dados", erro)
+            return {"mensagemServidor": `Erro na atualização de dados: ${erro.message || erro}`};
+        }
+    };
 
-//Metodo PUT
-export async function PUT(rotaEspecifica, objeto) {
-    try{
-        const objetoJSON = JSON.stringify(objeto);
-        let resposta = await fetch(rotaEspecifica, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: objetoJSON,
-            credentials: 'include' // Permite que o navegador envie cookies de sessão
-        })
-        resposta = await resposta.json();
-        return resposta
-    }
-    catch{
-        console.error("Erro na atualização de dados", erro)
-        return {"mensagemServidor": `Erro na atualização de dados: ${erro.message || erro}`};
-    }
-};
-
-//Metedo DELETE
-export async function DELETE(rotaEspecifica) {
-    try{
-        let resposta = await fetch(rotaEspecifica, {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include' // Permite que o navegador envie cookies de sessão
-        })
-        resposta = await resposta.json();
-        return resposta
-    }
-    catch{
-        console.error("Erro na excluição de dados", erro)
-        return {"mensagemServidor": `Erro na excluição de dados: ${erro.message || erro}`};
-    }
-};
+    //Metedo DELETE
+    export async function DELETE(rotaEspecifica) {
+        try{
+            let resposta = await fetch(rotaEspecifica, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include' // Permite que o navegador envie cookies da sessão
+            })
+            resposta = await resposta.json();
+            return resposta
+        }
+        catch{
+            console.error("Erro na excluição de dados", erro)
+            return {"mensagemServidor": `Erro na excluição de dados: ${erro.message || erro}`};
+        }
+    };
   ```
 - Configurar Credenciais no Flask-CORS
   Você também precisa dizer ao Flask para aceitar essas credenciais de cross-origin. No seu app.py (Flask):
