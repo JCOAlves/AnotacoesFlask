@@ -2,10 +2,7 @@
 Implementar o Flask com o React JS envolve usar o Flask como API de backend (servidor) e o React como frontend (interface de usuário). Essa é a arquitetura moderna conhecida como MVA (Model-View-Adapter) ou Single Page Application (SPA).
 
 A chave para essa integração é garantir que o React possa fazer requisições HTTP (GET, POST, etc.) para a API Flask e que o Flask saiba como servir a aplicação React compilada.
-
-## 1. ⚙️ Estrutura e Configuração do Projeto
-A maneira mais organizada é manter o frontend e o backend em pastas separadas:
-
+Além disso, a estrutura do projeto deve ser organizada, e a maneira mais organizada é manter o frontend e o backend em pastas separadas:
 ```cmd
 /projeto_completo
 ├── /backend/               # Servidor Flask (API)
@@ -18,7 +15,7 @@ A maneira mais organizada é manter o frontend e o backend em pastas separadas:
     └── ...
 ```
 
-## 2. Configuração do Flask (Backend - API)
+## 1. Configuração do Flask (Backend - API)
 O Flask será responsável por hospedar e servir a API para o banco de dados. Com isso, defina rotas no Flask que retornem dados em formato JSON, utilizando jsonify.
 ```Python
 # backend/app.py
@@ -114,7 +111,7 @@ Existem duas formas principais de configurar o CORS no seu aplicativo Flask:
     ```
 O método 1 é o mais prático para começar, mas lembre-se de restringir as origens na etapa de produção usando o método 2.
 
-## 3. ⚛️ Configuração do React (Frontend - Interface)
+## 2. Configuração do React (Frontend - Interface)
 O React será responsável por renderizar a interface e fazer as requisições HTTP. Ele usará a função useEffect para chamar a API Flask assim que o componente for montado.
 ```JavaScript
 // frontend/src/components/UserList.js (Exemplo de componente React)
@@ -149,7 +146,101 @@ function UserList() {
 export default UserList;
 ```
 
-## 4. 🚢 Etapa de Produção (Deployment)
+## 3. Envio e recebimento de cookies do sessão
+Segundo a política do CORS, o navegador por padrão não envia cookies (onde a sessão do Flask é armazenada) 
+em requisições feitas de um domínio/porta diferente, a menos que você o instrua explicitamente. 
+Dessa forma, devemos configurar asn credenciais do React e do Flask para o envio de cookies.
+
+- Configurar Credenciais no React
+  Você deve dizer à função fetch para incluir os cookies na requisição, definindo a opção credentials como 'include'. 
+  ```javascript
+  //Metodo GET
+export async function GET(rota){ 
+    try { 
+        let resposta = await fetch(rota, {credentials: 'include'}); // Permite que o navegador pegue cookies de sessão
+        const dados = await resposta.json();
+        if("mensagemServidor" in dados){
+            return dados["mensagemServidor"];
+        }else{
+            return dados;
+        }
+
+    } catch (erro) {
+        console.error("Erro na busca de dados", erro)
+        return {"mensagemServidor": `Erro na busca de dados: ${erro.message || erro}`};
+    }
+};
+
+//Metodo POST
+export async function POST(rota, objeto) {
+    try {
+        const objetoJSON = JSON.stringify(objeto);
+        let resposta = await fetch(rota, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: objetoJSON,
+            credentials: 'include' // Permite que o navegador envie cookies de sessão
+        })
+        resposta = await resposta.json();
+        return resposta
+    }
+    catch {
+        console.error("Erro no envio de dados", erro)
+        return {"mensagemServidor": `Erro no envio de dados: ${erro.message || erro}`}
+    }
+};
+
+//Metodo PUT
+export async function PUT(rotaEspecifica, objeto) {
+    try{
+        const objetoJSON = JSON.stringify(objeto);
+        let resposta = await fetch(rotaEspecifica, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: objetoJSON,
+            credentials: 'include' // Permite que o navegador envie cookies de sessão
+        })
+        resposta = await resposta.json();
+        return resposta
+    }
+    catch{
+        console.error("Erro na atualização de dados", erro)
+        return {"mensagemServidor": `Erro na atualização de dados: ${erro.message || erro}`};
+    }
+};
+
+//Metedo DELETE
+export async function DELETE(rotaEspecifica) {
+    try{
+        let resposta = await fetch(rotaEspecifica, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include' // Permite que o navegador envie cookies de sessão
+        })
+        resposta = await resposta.json();
+        return resposta
+    }
+    catch{
+        console.error("Erro na excluição de dados", erro)
+        return {"mensagemServidor": `Erro na excluição de dados: ${erro.message || erro}`};
+    }
+};
+  ```
+- Configurar Credenciais no Flask-CORS
+  Você também precisa dizer ao Flask para aceitar essas credenciais de cross-origin. No seu app.py (Flask):
+  ```python
+  from flask_cors import CORS
+
+  # ...
+  # CORREÇÃO CRÍTICA: Permite que o CORS envie cookies de volta
+  CORS(app, supports_credentials=True, origins="http://localhost:3000") # Use a porta correta do seu React
+
+  app.config['SECRET_KEY'] = 'SUA_CHAVE_SECRETA_MUITO_LONGA_E_RANDOMICA'
+  app.config['SESSION_COOKIE_SAMESITE'] = 'Lax' # Ou None se precisar de compatibilidade total, mas Lax é mais seguro
+  # ...
+  ```
+
+## 4. Etapa de Produção (Deployment)
 Para a produção (quando você for hospedar o site final), você não pode rodar o React e o Flask em portas separadas. Você usará o Flask para servir os arquivos estáticos do React.
 Compilar o React: No terminal da pasta /frontend, execute o comando de build do React:
 ```Bash
