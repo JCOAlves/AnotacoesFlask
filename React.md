@@ -242,7 +242,9 @@ Dessa forma, devemos configurar asn credenciais do React e do Flask para o envio
 
 ## 4. Etapa de Produção (Deployment)
 Para a produção (quando você for hospedar o site final), você não pode rodar o React e o Flask em portas separadas. Você usará o Flask para servir os arquivos estáticos do React.
-Compilar o React: No terminal da pasta /frontend, execute o comando de build do React:
+
+**Compilar o React**: 
+No terminal da pasta /frontend, execute o comando de build do React:
 ```Bash
 npm run build
 ```
