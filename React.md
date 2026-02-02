@@ -155,7 +155,7 @@ Dessa forma, devemos configurar asn credenciais do React e do Flask para o envio
   Você deve dizer à função fetch para incluir os cookies na requisição, definindo a opção credentials como 'include'. 
   ```javascript
   //Metodo GET
-    export async function GET(rota){ 
+    async function GET(rota){ 
         try { 
             let resposta = await fetch(rota, {credentials: 'include'}); // Permite que o navegador pegue cookies de sessão
             const dados = await resposta.json();
@@ -172,7 +172,7 @@ Dessa forma, devemos configurar asn credenciais do React e do Flask para o envio
     };
 
     //Metodo POST
-    export async function POST(rota, objeto) {
+    async function POST(rota, objeto) {
         try {
             const objetoJSON = JSON.stringify(objeto);
             let resposta = await fetch(rota, {
@@ -191,7 +191,7 @@ Dessa forma, devemos configurar asn credenciais do React e do Flask para o envio
     };
 
     //Metodo PUT
-    export async function PUT(rotaEspecifica, objeto) {
+    async function PUT(rotaEspecifica, objeto) {
         try{
             const objetoJSON = JSON.stringify(objeto);
             let resposta = await fetch(rotaEspecifica, {
@@ -210,7 +210,7 @@ Dessa forma, devemos configurar asn credenciais do React e do Flask para o envio
     };
 
     //Metedo DELETE
-    export async function DELETE(rotaEspecifica) {
+    async function DELETE(rotaEspecifica) {
         try{
             let resposta = await fetch(rotaEspecifica, {
                 method: 'DELETE',
