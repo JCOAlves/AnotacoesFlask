@@ -108,9 +108,29 @@ if __name__ == '__main__':
 - `http://127.0.0.1:5000/produto/123` -> `Detalhes do produto com ID: 123`
 - `http://127.0.0.1:5000/produto/abc` -> Retornará um erro 404 Not Found, pois 'abc' não é um inteiro.
 - `http://127.0.0.1:5000/download/pasta/subpasta/arquivo.txt` -> `Preparando para baixar o arquivo: pasta/subpasta/arquivo.txt`
-- `http://127.0.0.1:5000/desconto/10.5` -> `Aplicando 10.5% de desconto.`
+- `http://127.0.0.1:5000/desconto/10.5` -> `Aplicando 10.5% de desconto.
 
-## 4. Usando `url_for()` com Variáveis
+## 4. Lidando com parâmetros de seleção
+Em rotas podemos usar parâmetros de seleção, que são dados nas rotas que não são obrigatorias e são usadas para filtragem e busca de dados.
+Eles aparecem após a interrogação (`?`) na URL (ex: `/produtos?categoria=livros&ordem=asc`). 
+
+Para acessá-los, utilize o objeto request.args: 
+- **Obter um valor único**: Use `.get('chave')`. É recomendável definir um valor padrão para evitar erros caso o parâmetro não seja enviado.
+- **Converter tipos**: Você pode forçar o tipo do dado (ex: `int`) diretamente no `get`.
+- **Múltiplos valores**: Se um parâmetro aparecer várias vezes (ex: `?tag=python&tag=flask`), use `.getlist('chave')`.
+
+```python
+from flask import Flask, request
+
+@app.route('/busca')
+def buscar():
+    # URL: /busca?termo=flask&pagina=2
+    termo = request.args.get('termo')
+    pagina = request.args.get('pagina', default=1, type=int)
+    return f"Buscando por {termo} na página {pagina}"
+```
+
+## 5. Usando `url_for()` com Variáveis
 Quando você cria links ou redirecionamentos para rotas com variáveis, você deve usar a função `url_for()`, passando os valores das variáveis como argumentos de palavra-chave.
 
 ```python
